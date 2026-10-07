@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Netway — Estudo de Região</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --roxo-profundo: #270047;
+    --roxo-vivo: #9B57E9;
+    --lavanda: #D9C2F5;
+    --claro: #F3EAF7;
+    --navy: #0E2841;
+    --laranja: #E97132;
+    --teal: #0f9d8a;
+    --verde: #2e8a57;
+    --amarelo: #d4a017;
+    --vermelho: #c0392b;
+    --cinza: #6b7280;
+    --bg: #f7f4fb;
+    --card: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Aptos", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    background: var(--bg); color: var(--navy); min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  header {
+    position: relative; background: var(--roxo-profundo); color: #fff;
+    padding: 22px 36px; display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; overflow: hidden;
+  }
+  .brand { display: flex; align-items: center; gap: 18px; z-index: 1; }
+  .brand img { height: 40px; display: block; }
+  .brand .sub {
+    border-left: 2px solid var(--roxo-vivo); padding-left: 16px;
+    font-size: .9rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--lavanda); font-weight: 300;
+  }
+  .header-right { display: flex; align-items: center; gap: 14px; z-index: 1; flex-wrap: wrap; }
+  .city-select {
+    background: #3a1560; color: #fff; border: 1px solid var(--roxo-vivo);
+    border-radius: 9px; padding: 10px 16px; font-size: .95rem; font-weight: 600;
+    cursor: pointer; outline: none; min-width: 200px;
+  }
+  .city-select option { background: #2a0a4a; }
+
+  main { max-width: 1300px; margin: 0 auto; padding: 26px 32px 60px; width: 100%; flex: 1; }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1.6fr 1fr; gap: 22px; margin-bottom: 26px;
+  }
+  @media (max-width: 880px){ .hero { grid-template-columns: 1fr; } }
+  .hero-card {
+    background: linear-gradient(135deg, var(--roxo-profundo), #4a1a7a); color: #fff;
+    border-radius: 16px; padding: 26px 30px; box-shadow: 0 3px 14px rgba(39,0,71,.18);
+  }
+  .hero-card h1 { font-size: 2.1rem; margin-bottom: 2px; }
+  .hero-card .uf { color: var(--lavanda); font-weight: 300; font-size: 1.4rem; }
+  .hero-card .apelido { color: var(--lavanda); font-style: italic; font-size: 1rem; margin: 6px 0 2px; }
+  .hero-card .regiao { font-size: .85rem; color: #e9dcfb; margin-bottom: 14px; opacity:.9; }
+  .hero-card .resumo { font-size: .92rem; line-height: 1.6; color: #f1e9fb; }
+
+  .score-card {
+    background: var(--card); border-radius: 16px; padding: 22px; text-align: center;
+    box-shadow: 0 3px 14px rgba(39,0,71,.10); display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .gauge-wrap { position: relative; width: 200px; height: 120px; margin: 4px auto 0; }
+  .gauge-num { position: absolute; bottom: 4px; left: 0; width: 100%; text-align: center; }
+  .gauge-num .n { font-size: 2.6rem; font-weight: 800; line-height: 1; }
+  .gauge-num .of { font-size: .8rem; color: var(--cinza); }
+  .score-label { margin-top: 8px; font-weight: 700; font-size: 1.05rem; letter-spacing: .5px; text-transform: uppercase; }
+  .score-sub { font-size: .8rem; color: var(--cinza); margin-top: 2px; }
+
+  /* RECOMMENDATION BANNER */
+  .reco {
+    border-radius: 14px; padding: 18px 24px; margin-bottom: 26px; color: #fff;
+    display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+  }
+  .reco .tag { font-size: .72rem; text-transform: uppercase; letter-spacing: 1.5px; background: rgba(255,255,255,.22); padding: 5px 12px; border-radius: 20px; font-weight: 700; }
+  .reco .txt { flex: 1; min-width: 260px; font-size: .92rem; line-height: 1.55; }
+  .reco .txt b { font-weight: 800; }
+
+  /* SCORE BREAKDOWN */
+  .breakdown { background: var(--card); border-radius: 14px; padding: 20px 24px; margin-bottom: 26px; box-shadow: 0 1px 4px rgba(39,0,71,.08); }
+  .breakdown h3, .sec-h { font-size: .8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--roxo-profundo); margin-bottom: 14px; font-weight: 700; }
+  .bd-row { display: flex; align-items: center; gap: 14px; margin-bottom: 11px; }
+  .bd-row .lbl { width: 160px; font-size: .82rem; color: var(--navy); }
+  .bd-row .bar-bg { flex: 1; height: 12px; background: #eee6f5; border-radius: 8px; overflow: hidden; }
+  .bd-row .bar-fill { height: 100%; border-radius: 8px; }
+  .bd-row .val { width: 42px; text-align: right; font-size: .82rem; font-weight: 700; }
+  .bd-row .wt { width: 44px; text-align: right; font-size: .68rem; color: var(--cinza); }
+
+  /* KPIs */
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 30px; }
+  .kpi { background: var(--card); border-radius: 12px; padding: 16px 18px; border-left: 5px solid var(--roxo-vivo); box-shadow: 0 1px 4px rgba(39,0,71,.08); }
+  .kpi .t { font-size: .72rem; text-transform: uppercase; letter-spacing: .5px; color: var(--cinza); margin-bottom: 6px; }
+  .kpi .v { font-size: 1.5rem; font-weight: 800; color: var(--roxo-profundo); line-height: 1.1; overflow-wrap: anywhere; word-break: break-word; }
+  .kpi .d { font-size: .74rem; color: var(--cinza); margin-top: 4px; }
+
+  h2.section { font-size: 1.02rem; color: var(--roxo-profundo); margin: 30px 0 14px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid var(--lavanda); padding-bottom: 6px; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 16px; }
+  @media (max-width: 820px){ .grid2 { grid-template-columns: 1fr; } }
+  .panel { background: var(--card); border-radius: 12px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(39,0,71,.08); }
+  .panel canvas { max-height: 260px; }
+
+  .list-clean { list-style: none; }
+  .list-clean li { padding: 8px 0; border-bottom: 1px solid #f0eaf7; font-size: .86rem; line-height: 1.45; }
+  .list-clean li:last-child { border-bottom: none; }
+  .list-clean li b { color: var(--roxo-profundo); }
+
+  .badge { display: inline-block; font-size: .68rem; font-weight: 700; padding: 3px 9px; border-radius: 12px; text-transform: uppercase; letter-spacing: .5px; }
+  .b-alta { background: #fdeaea; color: var(--vermelho); }
+  .b-media { background: #fdf4e3; color: var(--amarelo); }
+  .b-baixa { background: #e7f5ec; color: var(--verde); }
+
+  .comp-card { background: var(--card); border-radius: 12px; padding: 16px 18px; box-shadow: 0 1px 4px rgba(39,0,71,.08); border-top: 4px solid var(--roxo-vivo); }
+  .comp-card h4 { font-size: 1rem; color: var(--roxo-profundo); margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .comp-card .tipo { font-size: .74rem; color: var(--cinza); margin-bottom: 8px; }
+  .comp-card .det { font-size: .82rem; line-height: 1.5; color: var(--navy); }
+
+  .bairro-chip { display: inline-flex; flex-direction: column; gap: 3px; background: #f6f0fc; border-radius: 10px; padding: 10px 14px; margin: 5px 6px 5px 0; max-width: 100%; }
+  .bairro-chip .bn { font-weight: 700; font-size: .86rem; color: var(--roxo-profundo); }
+  .bairro-chip .bd { font-size: .76rem; color: var(--cinza); }
+  .col-good .bairro-chip { border-left: 4px solid var(--verde); }
+  .col-bad .bairro-chip { border-left: 4px solid var(--laranja); }
+
+  .tags span { display:inline-block; background:#efe6f9; color:var(--roxo-profundo); font-size:.76rem; padding:5px 11px; border-radius:14px; margin:3px 5px 3px 0; }
+  .note { font-size: .8rem; color: var(--cinza); font-style: italic; margin-top: 10px; line-height:1.5; }
+  .fontes { font-size: .74rem; color: var(--cinza); margin-top: 30px; border-top: 1px solid #e6dcf2; padding-top: 12px; }
+  footer { text-align:center; font-size:.74rem; color:var(--cinza); padding: 18px; }
+  .gtm-box { background: linear-gradient(135deg,#faf6ff,#f1e9fb); border:1px solid var(--lavanda); border-radius:12px; padding:18px 22px; }
+  .gtm-box .camp { font-size:1.3rem; font-weight:800; color:var(--roxo-profundo); }
+  .gtm-box .slogan { font-style:italic; color:var(--roxo-vivo); margin-bottom:10px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <img src="logo_netway.png" alt="Netway" onerror="this.style.display='none'">
+    <span class="sub">Estudo de Região</span>
+  </div>
+  <div class="header-right">
+    <select id="citySelect" class="city-select" onchange="render(this.value)"></select>
+  </div>
+</header>
+
+<main id="app"><!-- render aqui --></main>
+
+<footer>Inteligência de Expansão Netway · dados via IBGE + estudo Caravela · atualização manual pelo Claude</footer>
+
+<script>
+let DATA = null;
+
+const fmtInt = n => n==null ? '—' : n.toLocaleString('pt-BR');
+const fmtBRL = n => n==null ? '—' : n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+// versão compacta para valores grandes: R$ 1,89 bi / R$ 478 mi
+const fmtBRLc = n => {
+  if(n==null) return '—';
+  if(n>=1e9) return 'R$ '+(n/1e9).toLocaleString('pt-BR',{maximumFractionDigits:2})+' bi';
+  if(n>=1e6) return 'R$ '+(n/1e6).toLocaleString('pt-BR',{maximumFractionDigits:0})+' mi';
+  if(n>=1e3) return 'R$ '+(n/1e3).toLocaleString('pt-BR',{maximumFractionDigits:0})+' mil';
+  return fmtBRL(n);
+};
+
+function scoreColor(v){
+  if(v>=70) return '#2e8a57';
+  if(v>=50) return '#d4a017';
+  if(v>=35) return '#E97132';
+  return '#c0392b';
+}
+function scoreWord(v){
+  if(v>=70) return 'Alta Atratividade';
+  if(v>=50) return 'Atratividade Moderada';
+  if(v>=35) return 'Atratividade Baixa';
+  return 'Pouco Atrativa';
+}
+
+function computeScore(c){
+  const p = DATA.pesos_score, n = c.avaliacao.notas;
+  const total = (n.mercado*p.mercado + n.poder_economico*p.poder_economico + n.concorrencia*p.concorrencia + n.dinamismo*p.dinamismo + n.capital_humano*p.capital_humano) / (p.mercado+p.poder_economico+p.concorrencia+p.dinamismo+p.capital_humano);
+  return Math.round(total);
+}
+
+function recoBlock(c, score){
+  const map = {
+    comprar:  {tag:'Recomendação: Comprar operação (M&A)', color:'linear-gradient(135deg,#0f9d8a,#0b7a6b)'},
+    abrir:    {tag:'Recomendação: Abrir do zero (Greenfield)', color:'linear-gradient(135deg,#9B57E9,#6b2fb0)'},
+    hibrida:  {tag:'Recomendação: Estratégia híbrida', color:'linear-gradient(135deg,#E97132,#c85519)'},
+    evitar:   {tag:'Recomendação: Evitar / reavaliar', color:'linear-gradient(135deg,#c0392b,#8e2820)'}
+  };
+  const r = map[c.avaliacao.recomendacao_estrategica] || map.hibrida;
+  return `<div class="reco" style="background:${r.color}">
+    <span class="tag">${r.tag}</span>
+    <div class="txt">${c.avaliacao.sintese}</div>
+  </div>`;
+}
+
+function gaugeSVG(score){
+  const color = scoreColor(score);
+  const pct = Math.max(0, Math.min(1, score/100));
+  // ângulo de 180° (esquerda) a 0° (direita), passando pelo topo
+  const ang = Math.PI * (1 - pct);
+  const r = 85, cx=100, cy=100;
+  const x = cx + r*Math.cos(ang), y = cy - r*Math.sin(ang);
+  const large = 0;
+  const arcBg = `M15,100 A85,85 0 0,1 185,100`;
+  const arcFg = `M15,100 A85,85 0 ${large},1 ${x.toFixed(1)},${y.toFixed(1)}`;
+  return `<svg viewBox="0 0 200 120" width="200" height="120">
+    <path d="${arcBg}" fill="none" stroke="#eee6f5" stroke-width="16" stroke-linecap="round"/>
+    <path d="${arcFg}" fill="none" stroke="${color}" stroke-width="16" stroke-linecap="round"/>
+  </svg>`;
+}
+
+// Seção Mercado de Banda Larga (Anatel via Radar da Telecom) — robusta a dados parciais
+function blMercado(c){
+  const b = c.banda_larga;
+  const pc = c.perfil_consumo || {};
+  const ehEstado = c.tipo === 'estado';
+  const escopo = ehEstado ? 'no estado' : 'na cidade';
+  const temVar = b.lider_var_12m != null;
+  const varCor = (b.lider_var_12m||0) >= 0 ? 'var(--verde)' : 'var(--vermelho)';
+  const varTxt = temVar ? ((b.lider_var_12m>=0?'▲ +':'▼ ')+Math.abs(b.lider_var_12m).toLocaleString('pt-BR',{maximumFractionDigits:2})+'% 12m') : '';
+  const saturado = b.acessos_por_100_domic >= 100;
+  const gapTxt = saturado
+    ? `<b style="color:var(--laranja)">Mercado saturado</b> — ${String(b.acessos_por_100_domic).replace('.',',')} acessos/100 domicílios (mais acessos que lares).`
+    : `<b style="color:var(--verde)">${fmtInt(b.mercado_enderecavel_domic_sem_bl)} lares sem banda larga</b> — penetração de ${String(b.acessos_por_100_domic).replace('.',',')} acessos/100 domicílios (espaço de crescimento${ehEstado?' no interior':' orgânico'}).`;
+  const kpi6 = (b.velocidade_medida_mediana!=null)
+    ? {t:'Velocidade medida', v:b.velocidade_medida_mediana+' Mbps', d:`contratada ${b.velocidade_contratada_media} Mbps · IQC ${b.iqc}/100`}
+    : (b.lider_em_cidades ? {t:'Líder em cidades', v:b.lider_em_cidades.nome, d:`lidera em ${b.lider_em_cidades.qtd} cidades`} : {t:'% Fibra', v:String(b.pct_fibra).replace('.',',')+'%', d:'FTTH'});
+  const kpisBL = [
+    {t:'Acessos de BL fixa', v:fmtInt(b.acessos_totais), d:b.ref},
+    {t:'% Fibra (FTTH)', v:String(b.pct_fibra).replace('.',',')+'%', d:'dos acessos'},
+    {t:'Penetração', v:String(b.acessos_por_100_domic).replace('.',',')+'/100', d:'acessos por 100 domicílios'},
+    {t:'Operadoras '+escopo, v:fmtInt(b.operadoras_na_cidade), d:'com acessos (Anatel)'},
+    {t:'Líder de mercado', v:b.lider, d:`${String(b.lider_share).replace('.',',')}%${temVar?' · <span style="color:'+varCor+'">'+varTxt+'</span>':''}`},
+    kpi6
+  ];
+  const idx = b.indices_radar;
+  const idxBar = (lbl,v,invert)=>{
+    const good = invert ? (10-v) : v;
+    const cor = good>=6?'var(--verde)':good>=4?'var(--amarelo)':'var(--laranja)';
+    return `<div class="bd-row"><span class="lbl">${lbl}</span>
+      <span class="bar-bg"><span class="bar-fill" style="width:${v*10}%;background:${cor}"></span></span>
+      <span class="val">${String(v).replace('.',',')}</span><span class="wt">/10</span></div>`;
+  };
+  const shareNote = b.b2b_b2c_lider
+    ? `Base do líder ${b.b2b_b2c_lider.op}: ${fmtInt(b.b2b_b2c_lider.b2b)} B2B (empresas) + ${fmtInt(b.b2b_b2c_lider.b2c)} B2C (pessoas).`
+    : (b.share_nota || '');
+  const dirBlock = idx
+    ? `<div class="sec-h">Índices Radar da Telecom</div>
+       ${idxBar('Oportunidade', idx.oportunidade, false)}
+       ${idxBar('Viabilidade', idx.viabilidade, false)}
+       ${idxBar('Saturação (menor = melhor)', idx.saturacao, true)}`
+    : (pc.cobertura_4g!=null ? `<div class="sec-h">Cobertura & consumo</div>
+       <div class="note" style="font-style:normal">Cobertura 4G ${String(pc.cobertura_4g).replace('.',',')}% · 5G ${String(pc.cobertura_5g).replace('.',',')}% · ARPU móvel R$ ${pc.arpu_movel} · penetração BB ${String(b.penetracao_bb_pop).replace('.',',')}%.</div>` : '');
+  const painelConsumo = pc.classes_sociais
+    ? `<div class="panel"><div class="sec-h">Classes sociais (poder de compra)</div><canvas id="chClasses"></canvas>
+        <div class="note">Cobertura 4G ${String(pc.cobertura_4g).replace('.',',')}% · 5G ${String(pc.cobertura_5g).replace('.',',')}% · ARPU móvel R$ ${pc.arpu_movel}.</div>
+      </div>`
+    : `<div class="panel"><div class="sec-h">Fragmentação do mercado</div><div class="note" style="font-style:normal">${b.fragmentacao_nota||'Mercado pulverizado — ver leitura ao lado.'}</div></div>`;
+  return `
+  <h2 class="section">Mercado de Banda Larga Fixa — Anatel <span style="font-size:.7rem;color:var(--cinza);text-transform:none;letter-spacing:0">fonte: Radar da Telecom · ${b.ref}</span></h2>
+  <div class="kpis">
+    ${kpisBL.map(k=>`<div class="kpi"><div class="t">${k.t}</div><div class="v">${k.v}</div><div class="d">${k.d}</div></div>`).join('')}
+  </div>
+  <div class="grid2">
+    <div class="panel"><div class="sec-h">Market share por provedor (acessos)</div><canvas id="chShare"></canvas>
+      ${shareNote?`<div class="note">${shareNote}</div>`:''}
+    </div>
+    <div class="panel">
+      <div class="sec-h">Oportunidade de entrada</div>
+      <div class="rota-info" style="margin-bottom:14px">${gapTxt}</div>
+      ${dirBlock}
+    </div>
+  </div>
+  <div class="grid2">
+    ${painelConsumo}
+    <div class="panel"><div class="sec-h">Leitura do mercado</div><div class="note" style="font-style:normal">${b.leitura}</div>
+      ${b.netway_com_asn?`<div class="rota-info" style="margin-top:12px;background:linear-gradient(120deg,#0f9d8a,#0b7a6b)"><b>✓ Net Way já opera ASN/BGP próprio ${escopo}</b> — autonomia de roteamento como porta de entrada.</div>`:''}
+    </div>
+  </div>`;
+}
+
+// Seção de municípios em destaque (apenas para visão estadual)
+function municipiosDestaque(c){
+  const m = c.municipios_destaque;
+  const chip = (nome, val, cor) => `<div class="bairro-chip" style="border-left:4px solid ${cor}"><span class="bn">${nome}</span><span class="bd">${val}</span></div>`;
+  return `
+  <h2 class="section">Municípios em destaque</h2>
+  <div class="grid3">
+    <div class="panel"><div class="sec-h" style="color:var(--roxo-vivo)">Maior oportunidade (índice Radar)</div>
+      ${m.oportunidades.map(x=>chip(x.cidade, 'Índice '+String(x.indice).replace('.',',')+'/10 · '+x.nota, '#9B57E9')).join('')}
+    </div>
+    <div class="panel"><div class="sec-h" style="color:var(--verde)">Menor penetração de BL (mais a conquistar)</div>
+      ${m.baixa_penetracao.map(x=>chip(x.cidade, x.bb+'% de penetração · '+fmtInt(x.pop)+' hab.', '#2e8a57')).join('')}
+    </div>
+    <div class="panel"><div class="sec-h" style="color:var(--laranja)">Maior crescimento populacional</div>
+      ${m.crescimento.map(x=>chip(x.cidade, '+'+String(x.cresc).replace('.',',')+'%/ano', '#E97132')).join('')}
+    </div>
+  </div>
+  <div class="note">${m.nota}</div>`;
+}
+
+let charts = [];
+function destroyCharts(){ charts.forEach(c=>c.destroy()); charts=[]; }
+
+function render(id){
+  const c = DATA.cidades.find(x=>x.id===id) || DATA.cidades[0];
+  const score = computeScore(c);
+  const col = scoreColor(score);
+  destroyCharts();
+
+  const d = c.demografia, e = c.economia;
+  const ehEstado = c.tipo === 'estado';
+  const kpis = ehEstado ? [
+    {t:'População', v:fmtInt(d.populacao), d:d.populacao_ano},
+    {t:'Municípios', v:fmtInt(d.municipios), d:`área ${fmtInt(Math.round(d.area_km2))} km²`},
+    {t:'Renda domiciliar', v:fmtBRL(e.renda_domiciliar_per_capita), d:'per capita/mês (IBGE)'},
+    {t:'Densidade', v:`${String(d.densidade_hab_km2).replace('.',',')} hab/km²`, d:'habitantes por km²'},
+    {t:'IDH', v:d.idhm.toFixed(3).replace('.',','), d:`${d.idhm_faixa} (${d.idhm_ano})`},
+    {t:'Idade média', v:`${String(d.idade_media).replace('.',',')} anos`, d:'população jovem'},
+    {t:'Receita estadual', v:fmtBRLc(e.receitas_municipais_2024), d:'2025'},
+    {t:'Penetração BB', v:`${String(c.banda_larga.penetracao_bb_pop).replace('.',',')}%`, d:'abaixo da média nacional'}
+  ] : [
+    {t:'População', v:fmtInt(d.populacao), d:d.populacao_ano},
+    {t:'População (censo 2022)', v:fmtInt(d.populacao_censo_2022), d:`${d.ranking_populacao_uf}º maior de ${c.uf}`},
+    {t:'PIB per capita', v:fmtBRL(e.pib_per_capita), d:`${e.pib_per_capita_ano} · ${e.ranking_pib_per_capita_uf}º no ${c.uf} (média ${fmtBRL(e.pib_per_capita_uf_media)})`},
+    {t:'Densidade', v:`${String(d.densidade_hab_km2).replace('.',',')} hab/km²`, d:`área ${fmtInt(Math.round(d.area_km2))} km²`},
+    {t:'Escolarização 6–14', v:`${String(d.escolarizacao_6_14).replace('.',',')}%`, d:'ensino regular'},
+    {t:'IDHM', v:d.idhm.toFixed(3).replace('.',','), d:`${d.idhm_faixa} (${d.idhm_ano})`},
+    {t:'Receita municipal', v:fmtBRLc(e.receitas_municipais_2024), d:'2024'},
+    {t:'Concorrentes ISP', v:c.concorrentes.length, d:c.concorrentes.filter(x=>x.forca==='Alta').length+' de força alta'}
+  ];
+
+  const bdDefs = [
+    ['Mercado / população','mercado'],
+    ['Poder econômico','poder_economico'],
+    ['Concorrência (folga)','concorrencia'],
+    ['Dinamismo / crescimento','dinamismo'],
+    ['Capital humano','capital_humano']
+  ];
+
+  let html = `
+  <div class="hero">
+    <div class="hero-card">
+      <h1>${c.nome} <span class="uf">/ ${c.uf}</span></h1>
+      ${ehEstado?`<div class="apelido" style="font-style:normal;font-weight:700;letter-spacing:1px">🗺️ ESTADO · VISÃO GERAL</div>`:`<div class="apelido">"${c.apelido}"</div>`}
+      <div class="regiao">${c.regiao}</div>
+      <div class="resumo">${c.resumo}</div>
+    </div>
+    <div class="score-card">
+      <div class="sec-h" style="margin-bottom:4px">Score de Atratividade</div>
+      <div class="gauge-wrap">
+        ${gaugeSVG(score)}
+        <div class="gauge-num"><span class="n" style="color:${col}">${score}</span><span class="of"> /100</span></div>
+      </div>
+      <div class="score-label" style="color:${col}">${scoreWord(score)}</div>
+      <div class="score-sub">média ponderada de 5 dimensões</div>
+    </div>
+  </div>
+
+  ${recoBlock(c, score)}
+
+  <div class="breakdown">
+    <h3>Composição do Score</h3>
+    ${bdDefs.map(([lbl,key])=>{
+      const val = c.avaliacao.notas[key];
+      const wt = DATA.pesos_score[key];
+      return `<div class="bd-row">
+        <span class="lbl">${lbl}</span>
+        <span class="bar-bg"><span class="bar-fill" style="width:${val}%;background:${scoreColor(val)}"></span></span>
+        <span class="val">${val}</span>
+        <span class="wt">${wt}%</span>
+      </div>`;
+    }).join('')}
+  </div>
+
+  <div class="kpis">
+    ${kpis.map(k=>`<div class="kpi"><div class="t">${k.t}</div><div class="v">${k.v}</div><div class="d">${k.d}</div></div>`).join('')}
+  </div>
+
+  ${c.banda_larga ? blMercado(c) : ''}
+
+  <h2 class="section">Economia</h2>
+  <div class="grid2">
+    <div class="panel"><div class="sec-h">Orçamento ${ehEstado?'estadual (2025)':'municipal (2024)'}</div><canvas id="chFisc"></canvas>
+      <div class="note">Receitas: ${fmtBRL(e.receitas_municipais_2024)} · Despesas: ${fmtBRL(e.despesas_municipais_2024)}. Fonte: IBGE/Siconfi.</div>
+    </div>
+    <div class="panel">
+      ${(e.empresas_ativas!=null||e.salario_mediano_admissao!=null)?`<div class="kpis" style="margin-bottom:10px">
+        <div class="kpi"><div class="t">${ehEstado?'Vínculos formais':'Empresas ativas'}</div><div class="v">${fmtInt(ehEstado?(e.vinculos_formais):e.empresas_ativas)}</div><div class="d">${ehEstado?'RAIS 2024':(e.empresas_ativas_ref||'')}</div></div>
+        <div class="kpi"><div class="t">Salário médio</div><div class="v">${fmtBRL(ehEstado?e.salario_medio_rais:e.salario_mediano_admissao)}</div><div class="d">${ehEstado?'RAIS 2024':'admissão (CAGED)'}</div></div>
+      </div>`:''}
+      <div class="sec-h">Vocações econômicas</div><div class="tags">${e.vocacoes.map(v=>`<span>${v}</span>`).join('')}</div>
+      <div class="note">${e.obs_fonte||''}</div>
+    </div>
+  </div>
+
+  <h2 class="section">Capital humano</h2>
+  <div class="panel">
+    <div class="kpis" style="margin-bottom:6px">
+      <div class="kpi"><div class="t">${ehEstado?'Com ensino superior':'Escolarização 6–14 anos'}</div><div class="v">${ehEstado?(String(c.capital_humano.pct_superior).replace('.',',')+'%'):(String(c.capital_humano.escolarizacao_6_14).replace('.',',')+'%')}</div><div class="d">${ehEstado?'dos vínculos formais (RAIS)':'ensino regular'}</div></div>
+      <div class="kpi"><div class="t">Idade média</div><div class="v">${c.demografia.idade_media||'—'} anos</div><div class="d">perfil etário</div></div>
+    </div>
+    <div class="note">${c.capital_humano.presenca_universitaria} ${c.capital_humano.observacao}</div>
+  </div>
+
+  ${ehEstado ? municipiosDestaque(c) : `
+  <h2 class="section">Mapa de bairros</h2>
+  <div class="grid2">
+    <div class="panel col-good"><div class="sec-h" style="color:var(--verde)">Melhor infraestrutura / alvo prioritário</div>
+      ${c.bairros.melhores.map(b=>`<div class="bairro-chip"><span class="bn">${b.nome}</span><span class="bd">${b.nota}</span></div>`).join('')}
+    </div>
+    <div class="panel col-bad"><div class="sec-h" style="color:var(--laranja)">Desafios socioeconômicos</div>
+      ${c.bairros.desafios.map(b=>`<div class="bairro-chip"><span class="bn">${b.nome}</span><span class="bd">${b.nota}</span></div>`).join('')}
+    </div>
+  </div>
+  <div class="note">${c.bairros.observacao}</div>
+
+  <h2 class="section">Empreendedorismo & tecido empresarial</h2>
+  ${c.empreendedorismo.ranking_regional_abertura ? `<div class="grid2">
+    <div class="panel"><div class="sec-h">Ranking regional (novas empresas)</div><canvas id="chEmp"></canvas>
+      <div class="note">${c.empreendedorismo.ranking_obs||''}</div>
+    </div>
+    <div class="panel"><div class="sec-h">Leitura</div><div class="note" style="font-style:normal">${c.empreendedorismo.nota}</div></div>
+  </div>` : `<div class="panel"><div class="note" style="font-style:normal">${c.empreendedorismo.nota}</div></div>`}`}
+
+  <h2 class="section">Concorrentes ISP (${c.concorrentes.length})</h2>
+  ${c.concorrencia_resumo?`<div class="reco" style="background:linear-gradient(135deg,#5a2a8a,#3a1560);margin-bottom:16px"><span class="tag">Panorama competitivo</span><div class="txt">${c.concorrencia_resumo}</div></div>`:''}
+  <div class="grid3">
+    ${c.concorrentes.map(k=>{
+      const cls = k.forca==='Alta'?'b-alta':k.forca==='Média'?'b-media':'b-baixa';
+      return `<div class="comp-card">
+      <h4>${k.nome} <span class="badge ${cls}">${k.forca}</span></h4>
+      <div class="tipo">${k.tipo}</div>
+      <div class="det">${k.detalhes}</div>
+    </div>`;}).join('')}
+  </div>
+
+  <h2 class="section">Infraestrutura & viabilidade técnica</h2>
+  <div class="panel">
+    <ul class="list-clean">
+      ${c.infraestrutura.rede_neutra?`<li><b>Rede neutra:</b> ${c.infraestrutura.rede_neutra}</li>`:''}
+      <li><b>Lançamento de fibra:</b> ${c.infraestrutura.lancamento_fibra}</li>
+    </ul>
+    <div class="sec-h" style="margin-top:14px">Diferenciais locais</div>
+    <div class="tags">${c.infraestrutura.diferenciais_locais.map(x=>`<span>${x}</span>`).join('')}</div>
+    ${c.infraestrutura.obs?`<div class="note">${c.infraestrutura.obs}</div>`:''}
+  </div>
+
+  <h2 class="section">Estratégia de entrada (Go-to-Market)</h2>
+  <div class="gtm-box">
+    <div class="camp">${c.estrategia_go_to_market.campanha}</div>
+    <div class="slogan">"${c.estrategia_go_to_market.slogan}"</div>
+    <div class="tags">${c.estrategia_go_to_market.segmentos.map(s=>`<span>${s}</span>`).join('')}</div>
+    <ul class="list-clean" style="margin-top:10px">
+      <li><b>Plano social:</b> ${c.estrategia_go_to_market.plano_social}</li>
+      <li><b>Estrutura sugerida:</b> ${c.estrategia_go_to_market.estrutura_sugerida}</li>
+    </ul>
+  </div>
+
+  <div class="fontes"><b>Fontes:</b> ${c.fontes.join(' · ')}</div>
+  `;
+
+  document.getElementById('app').innerHTML = html;
+
+  // Charts
+  if(c.banda_larga){
+    const ms = c.banda_larga.market_share;
+    charts.push(new Chart(document.getElementById('chShare'), {
+      type:'bar',
+      data:{ labels: ms.map(x=>x.op), datasets:[{ label:'Market share (%)',
+        data: ms.map(x=>x.share),
+        backgroundColor: ms.map((x,i)=>['#9B57E9','#270047','#0f9d8a','#c9bbe0'][i]||'#c9bbe0') }] },
+      options:{ indexAxis:'y', plugins:{ legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>ctx.raw+'% · '+(ms[ctx.dataIndex].acessos).toLocaleString('pt-BR')+' acessos'}} },
+        scales:{ x:{ ticks:{ callback:v=>v+'%' } } } }
+    }));
+    const cl = (c.perfil_consumo||{}).classes_sociais;
+    const clCanvas = document.getElementById('chClasses');
+    if(cl && clCanvas){
+      charts.push(new Chart(clCanvas, {
+        type:'bar',
+        data:{ labels: cl.map(x=>'Classe '+x.classe), datasets:[{ label:'% da população',
+          data: cl.map(x=>x.pct), backgroundColor:'#9B57E9' }] },
+        options:{ plugins:{ legend:{display:false} }, scales:{ y:{ ticks:{ callback:v=>v+'%' } } } }
+      }));
+    }
+  }
+
+  if(e.receitas_municipais_2024!=null){
+    charts.push(new Chart(document.getElementById('chFisc'), {
+      type:'bar',
+      data:{ labels:['Receitas','Despesas'], datasets:[{ label:'R$',
+        data:[e.receitas_municipais_2024, e.despesas_municipais_2024],
+        backgroundColor:['#2e8a57','#E97132'] }] },
+      options:{ plugins:{ legend:{display:false} }, scales:{ y:{ ticks:{ callback:v=>'R$ '+(v/1e6).toFixed(0)+' mi' } } } }
+    }));
+  }
+
+  const rk = (c.empreendedorismo||{}).ranking_regional_abertura;
+  if(rk){
+    charts.push(new Chart(document.getElementById('chEmp'), {
+      type:'bar',
+      data:{ labels: rk.map(x=>x.cidade), datasets:[{ label:'Novas empresas',
+        data: rk.map(x=>x.qtd), backgroundColor:'#270047' }] },
+      options:{ indexAxis:'y', plugins:{ legend:{display:false} } }
+    }));
+  }
+}
+
+fetch('cidades.json?v=' + Date.now(), { cache: 'no-store' })
+  .then(r=>r.json())
+  .then(d=>{
+    DATA = d;
+    const sel = document.getElementById('citySelect');
+    sel.innerHTML = d.cidades.map(c=>`<option value="${c.id}">${c.nome} — ${c.uf}${c.tipo==='estado'?' (Estado)':''}</option>`).join('');
+    render(d.cidades[0].id);
+  })
+  .catch(e=>{
+    document.getElementById('app').innerHTML = '<div class="panel" style="margin-top:30px">Não foi possível carregar <b>cidades.json</b>. Rode pelo atalho <b>Iniciar_Estudo_de_Regiao.command</b> (servidor local).<br><small>'+e+'</small></div>';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,565 @@
+{
+  "_meta": {
+    "titulo": "Estudo de Região — Inteligência de Expansão Netway",
+    "descricao": "Análise de viabilidade para aquisição (M&A) ou greenfield de operação de provedor de internet por cidade. Dados 100% de fontes públicas na internet: IBGE, Anatel (via Radar da Telecom), Receita Federal, CAGED e sites dos concorrentes.",
+    "atualizado_em": "2026-10-07",
+    "regra_de_dados": "TODAS as informações vêm da internet. Mercado de banda larga (market share, acessos, penetração, % fibra, B2B/B2C) tem como fonte a Anatel, consolidada pelo Radar da Telecom (radardatelecom.com.br). Campos sem fonte pública aberta são marcados.",
+    "como_adicionar_cidade": "Peça ao Claude: 'faça o estudo de região da cidade X'. Ele pesquisa na web (IBGE + Anatel/Radar da Telecom + sites dos concorrentes) e adiciona um novo objeto ao array 'cidades'. O score e a recomendação são calculados automaticamente."
+  },
+  "pesos_score": {
+    "mercado": 25,
+    "poder_economico": 20,
+    "concorrencia": 25,
+    "dinamismo": 15,
+    "capital_humano": 15
+  },
+  "cidades": [
+    {
+      "id": "caceres-mt",
+      "nome": "Cáceres",
+      "uf": "MT",
+      "codigo_ibge": "5102504",
+      "apelido": "Princesinha do Rio Paraguai",
+      "regiao": "Centro-Sul / Alto Pantanal — fronteira com a Bolívia",
+      "prefeito": "Antônia Eliene Liberato Dias (2025)",
+      "resumo": "Polo regional do sudoeste de MT, universitário (UNEMAT) e militar (2º Bfron), sede da ZPE de Cáceres (3ª ativa do Brasil). Mercado de banda larga concentrado no líder SEEG (49,6%), que vem PERDENDO base, e com penetração ainda baixa (61,9 acessos/100 domicílios = ~38% dos lares sem fibra). A Net Way já possui ASN/BGP próprio na cidade — há porta de entrada por consolidação e por captura de base.",
+      "coordenadas": { "lat": -16.0764, "lng": -57.6818 },
+      "demografia": {
+        "populacao": 91767,
+        "populacao_ano": "2025 (estimativa IBGE)",
+        "populacao_censo_2022": 89681,
+        "densidade_hab_km2": 3.66,
+        "ranking_populacao_uf": 9,
+        "area_km2": 24499.92,
+        "idhm": 0.708,
+        "idhm_ano": 2010,
+        "idhm_faixa": "Alto",
+        "escolarizacao_6_14": 97.14,
+        "mortalidade_infantil": 20.47,
+        "idade_media": 33,
+        "distritos": ["Sede", "Santo Antônio do Caramujo", "Horizonte D'Oeste", "Vila Aparecida"]
+      },
+      "economia": {
+        "pib_per_capita": 31174.15,
+        "pib_per_capita_ano": 2023,
+        "pib_per_capita_uf_media": 50700,
+        "ranking_pib_per_capita_uf": 122,
+        "receitas_municipais_2024": 478013208.86,
+        "despesas_municipais_2024": 458793994.71,
+        "renda_domiciliar_per_capita": 2018,
+        "salario_mediano_admissao": 1707.70,
+        "empresas_ativas": 10393,
+        "empresas_ativas_ref": "Receita Federal · 09/2026",
+        "vocacoes": ["Pecuária de corte (um dos maiores rebanhos do Brasil)", "Couro e frigoríficos", "Cana-de-açúcar / usinas", "Teca e madeira", "Turismo de pesca (FIPe)", "Logística: porto fluvial / Hidrovia Paraguai-Paraná / Rota Bioceânica"],
+        "obs_fonte": "PIB per capita, receitas e despesas: IBGE (2023-2024). Empresas ativas (CNPJ) e salário mediano de admissão: Receita Federal / Novo CAGED (via Radar da Telecom)."
+      },
+      "banda_larga": {
+        "ref": "Anatel · 08/2026 (via Radar da Telecom)",
+        "acessos_totais": 18514,
+        "pct_fibra": 86.34,
+        "domicilios": 29894,
+        "acessos_por_100_domic": 61.9,
+        "penetracao_bb_pop": 12.3,
+        "operadoras_na_cidade": 23,
+        "lider": "SEEG Fibras",
+        "lider_share": 49.57,
+        "lider_var_12m": -2.68,
+        "velocidade_contratada_media": 403,
+        "velocidade_medida_mediana": 49,
+        "iqc": 48,
+        "mercado_enderecavel_domic_sem_bl": 11380,
+        "netway_com_asn": true,
+        "market_share": [
+          { "op": "SEEG Fibras", "acessos": 9177, "share": 49.57 },
+          { "op": "Oi", "acessos": 4547, "share": 24.56 },
+          { "op": "Teleserv Telefonia e Segurança", "acessos": 1149, "share": 6.21 },
+          { "op": "Outras (20 operadoras)", "acessos": 3641, "share": 19.66 }
+        ],
+        "b2b_b2c_lider": { "op": "SEEG Fibras", "b2b": 701, "b2c": 8476 },
+        "indices_radar": { "oportunidade": 4.4, "saturacao": 7.2, "viabilidade": 5.3 },
+        "leitura": "Líder SEEG com 49,6% mas PERDENDO base (-2,68% em 12 meses) — base vulnerável a churn. Penetração de só 61,9 acessos/100 domicílios: ~11,4 mil lares ainda sem banda larga fixa (mercado endereçável real). 86% de fibra. Velocidade medida baixa (49 Mbps, IQC 48/100) — qualidade é um vetor de diferenciação. Índice de viabilidade do Radar 5,3/10 (melhor que Rondonópolis)."
+      },
+      "perfil_consumo": {
+        "classes_sociais": [
+          { "classe": "A", "pct": 8.6 },
+          { "classe": "B", "pct": 38.4 },
+          { "classe": "C", "pct": 31.7 },
+          { "classe": "D", "pct": 14.8 },
+          { "classe": "E", "pct": 6.5 }
+        ],
+        "cobertura_4g": 88.9,
+        "cobertura_5g": 19.6,
+        "arpu_movel": 106
+      },
+      "capital_humano": {
+        "escolarizacao_6_14": 97.14,
+        "presenca_universitaria": "UNEMAT (Universidade do Estado de MT) + FAPAN — atrai público jovem/universitário.",
+        "observacao": "Escolarização básica alta (97,14%). Mão de obra técnica superior ainda escassa localmente — planejar treinamento próprio. Classe B+C somam 70% da população (base sólida para planos intermediários)."
+      },
+      "bairros": {
+        "melhores": [
+          { "nome": "Centro", "nota": "Comércio, serviços e melhor infraestrutura — prioridade B2B e posteamento." },
+          { "nome": "Residencial Jonas Pinheiro", "nota": "Residencial de maior poder aquisitivo — alvo B2C premium." }
+        ],
+        "desafios": [
+          { "nome": "Jardim Mariana / Mossoró / São Paulo", "nota": "Bairros com desafios socioeconômicos — plano social (Bolsa Família/BPC) para captura de base." }
+        ],
+        "observacao": "A cidade tem 47 bairros (IBGE 2022). Segmentação fina por renda requer geomarketing; dados por bairro disponíveis na base Anatel/IBGE do Radar da Telecom (assinatura)."
+      },
+      "empreendedorismo": {
+        "nota": "Cáceres é hub regional de abertura de empresas no sudoeste de MT, com 10,4 mil CNPJs ativos. Base natural para operação-mãe regional. Demanda B2B crescente (comércio, agro, serviços).",
+        "ranking_regional_abertura": [
+          { "cidade": "Cáceres", "qtd": 300 },
+          { "cidade": "Pontes e Lacerda", "qtd": 175 },
+          { "cidade": "Mirassol d'Oeste", "qtd": 130 },
+          { "cidade": "Comodoro", "qtd": 120 },
+          { "cidade": "São José dos Quatro Marcos", "qtd": 105 }
+        ],
+        "ranking_obs": "Ordem de grandeza (levantamento regional); valores aproximados."
+      },
+      "concorrentes": [
+        { "nome": "SEEG Fibras", "tipo": "Fibra — líder (49,6% de share)", "forca": "Alta", "detalhes": "Líder absoluto com 9.177 acessos, mas PERDE base (-2,68%/12m). 701 clientes B2B + 8.476 B2C. Planos: Essencial 500Mb R$149,90 · Infinity 1Giga R$169,90. Base vulnerável a churn." },
+        { "nome": "Oi", "tipo": "Fibra (Nio/Vtal) — 24,6% de share", "forca": "Alta", "detalhes": "2º colocado com 4.547 acessos. Marca nacional sobre rede neutra Vtal." },
+        { "nome": "Teleserv Telefonia e Segurança", "tipo": "ISP local — 6,2% de share", "forca": "Média", "detalhes": "3º colocado com 1.149 acessos. Player local — candidato a aquisição." },
+        { "nome": "TIM Ultrafibra", "tipo": "Operadora nacional (fibra)", "forca": "Média", "detalhes": "Presente com preço agressivo (700 Mega R$99,99). Puxa o teto de preço." },
+        { "nome": "DuNet Fibras", "tipo": "ISP local + rural", "forca": "Média", "detalhes": "ISP local (Rua Cel. Faria 212, Centro). Planos 400Mb R$115 · 600Mb R$145 · 800Mb R$165. Rede própria de fibra — alvo natural de M&A." },
+        { "nome": "+18 operadoras", "tipo": "Cauda longa (19,7% de share somado)", "forca": "Baixa", "detalhes": "23 operadoras no total na cidade (Anatel). Mercado concentrado no top-2 (~74%), mas com longa cauda de pequenos ISPs consolidáveis." }
+      ],
+      "concorrencia_resumo": "Mercado concentrado: SEEG (49,6%) + Oi (24,6%) controlam ~74% dos 18.514 acessos, mas o líder está perdendo base e a penetração é baixa (38% dos lares sem fibra). Combinação favorável: dá para crescer tanto por aquisição de um ISP local (DuNet/Teleserv) quanto por captura orgânica de base e churn do líder, com qualidade superior (a velocidade medida local é fraca).",
+      "infraestrutura": {
+        "rede_neutra": "Vtal presente. A própria Net Way já opera ASN/BGP na cidade (autonomia de roteamento) — toehold de entrada.",
+        "lancamento_fibra": "DuNet e outros ISPs locais com rede própria. 86% dos acessos já são fibra.",
+        "diferenciais_locais": ["Net Way já tem ASN próprio na cidade", "ZPE de Cáceres ativa (3ª do Brasil)", "Porto fluvial / Hidrovia Paraguai-Paraná", "Rota Bioceânica", "2º Batalhão de Fronteira", "UNEMAT"],
+        "obs": "Condições de posteamento (Energisa) e LPU de lançamento requerem consulta direta às concessionárias."
+      },
+      "estrategia_go_to_market": {
+        "campanha": "Conecta Cáceres",
+        "slogan": "Sua cidade, sua internet, sua velocidade.",
+        "segmentos": ["B2C", "B2B", "B2G"],
+        "plano_social": "Plano ~R$ 99,90 para Bolsa Família e BPC — captura da base D/E (21% da população).",
+        "estrutura_sugerida": "Filial micro apoiada pela matriz regional MT, aproveitando o ASN já existente. Ataque duplo: aquisição de ISP local + oferta de qualidade superior para capturar churn do líder."
+      },
+      "avaliacao": {
+        "notas": {
+          "mercado": 62,
+          "poder_economico": 50,
+          "concorrencia": 38,
+          "dinamismo": 75,
+          "capital_humano": 52
+        },
+        "recomendacao_estrategica": "hibrida",
+        "sintese": "Mercado médio em leve crescimento, com dinamismo econômico forte (ZPE, logística) e — ponto-chave revelado pela Anatel — penetração de banda larga ainda baixa (61,9 acessos/100 domicílios; ~11,4 mil lares sem fibra) e líder perdendo base. O índice de viabilidade do Radar (5,3/10) é melhor que o de Rondonópolis. A Net Way já tem ASN na cidade. Recomendação híbrida: adquirir um ISP local (DuNet ou Teleserv) para ganhar rede/base E, em paralelo, crescer organicamente capturando os lares não atendidos e o churn do líder, diferenciando por qualidade (a velocidade medida local é fraca)."
+      },
+      "fontes": [
+        "IBGE — Cidades e Estados / Cáceres (MT), cód. 5102504",
+        "Radar da Telecom — Telecom Cáceres/MT (Anatel 08/2026: market share, acessos, % fibra, B2B/B2C, penetração, índices)",
+        "Receita Federal / Novo CAGED (empresas ativas, salário mediano) via Radar da Telecom",
+        "minhaconexao.com.br / dunetfibras.com.br — planos e preços",
+        "Proj. Comercial.pdf — usado apenas como modelo de estrutura"
+      ]
+    },
+    {
+      "id": "rondonopolis-mt",
+      "nome": "Rondonópolis",
+      "uf": "MT",
+      "codigo_ibge": "5107602",
+      "apelido": "Capital do Agronegócio",
+      "regiao": "Sudeste Mato-grossense — principal hub logístico e do agronegócio de MT",
+      "prefeito": "Claudio Ferreira de Souza (2025)",
+      "resumo": "Segundo maior polo econômico de MT e capital do agronegócio (maior terminal ferroviário de grãos da América Latina). Mercado grande e rico, mas de banda larga SATURADO: 92,9 mil acessos para 81,6 mil domicílios (113,8 acessos/100 domic.), 44 operadoras e o líder Interfibras em expansão explosiva (+488% em 12 meses). Índice de viabilidade do Radar baixo (3,1/10). Entrada só por aquisição.",
+      "coordenadas": { "lat": -16.4707, "lng": -54.6356 },
+      "demografia": {
+        "populacao": 263708,
+        "populacao_ano": "2025 (estimativa IBGE)",
+        "populacao_censo_2022": 244911,
+        "densidade_hab_km2": 50.77,
+        "ranking_populacao_uf": 3,
+        "area_km2": 4824.51,
+        "idhm": 0.755,
+        "idhm_ano": 2010,
+        "idhm_faixa": "Alto",
+        "escolarizacao_6_14": 98.96,
+        "mortalidade_infantil": 11.1,
+        "idade_media": 32,
+        "distritos": ["Sede", "Nova Galiléia", "Boa Vista", "Vila Operária"]
+      },
+      "economia": {
+        "pib_per_capita": 67650.08,
+        "pib_per_capita_ano": 2023,
+        "pib_per_capita_uf_media": 50700,
+        "ranking_pib_per_capita_uf": 25,
+        "receitas_municipais_2024": 1887732423.48,
+        "despesas_municipais_2024": 1868784715.11,
+        "renda_domiciliar_per_capita": 2008,
+        "salario_mediano_admissao": 1930.00,
+        "empresas_ativas": 44981,
+        "empresas_ativas_ref": "Receita Federal · 09/2026",
+        "vocacoes": ["Agronegócio (soja, algodão, milho)", "Logística ferroviária (Terminal Rumo — maior terminal de grãos da América Latina)", "Esmagamento de soja / biodiesel", "Indústria e comércio atacadista", "Frigoríficos e pecuária", "UFR (Universidade Federal de Rondonópolis)"],
+        "obs_fonte": "PIB per capita, receitas e despesas: IBGE (2023-2024). Empresas ativas (CNPJ) e salário mediano: Receita Federal / Novo CAGED (via Radar da Telecom). PIB per capita acima da média de MT."
+      },
+      "banda_larga": {
+        "ref": "Anatel · 08/2026 (via Radar da Telecom)",
+        "acessos_totais": 92886,
+        "pct_fibra": 92.51,
+        "domicilios": 81637,
+        "acessos_por_100_domic": 113.8,
+        "penetracao_bb_pop": 14.3,
+        "operadoras_na_cidade": 44,
+        "lider": "Interfibras",
+        "lider_share": 25.67,
+        "lider_var_12m": 487.77,
+        "velocidade_contratada_media": 500,
+        "velocidade_medida_mediana": 362,
+        "iqc": 97,
+        "mercado_enderecavel_domic_sem_bl": 0,
+        "netway_com_asn": false,
+        "market_share": [
+          { "op": "Interfibras", "acessos": 23840, "share": 25.67 },
+          { "op": "Oi", "acessos": 23233, "share": 25.01 },
+          { "op": "Brasil TecPar", "acessos": 14351, "share": 15.45 },
+          { "op": "Outras (41 operadoras)", "acessos": 31462, "share": 33.87 }
+        ],
+        "b2b_b2c_lider": { "op": "Interfibras", "b2b": 2374, "b2c": 21466 },
+        "indices_radar": { "oportunidade": 2.4, "saturacao": 6.8, "viabilidade": 3.1 },
+        "leitura": "Mercado SATURADO: 113,8 acessos/100 domicílios (mais acessos que domicílios — múltiplas conexões/lar, sem folga residencial). 44 operadoras, top-3 com ~66%. Líder Interfibras em expansão explosiva (+487,8% em 12 meses: de 4.056 para 23.840 acessos) — está consolidando o mercado agora. Qualidade alta (362 Mbps medidos, IQC 97/100). Índices do Radar baixos: oportunidade 2,4 e viabilidade 3,1 — entrada tardia e cara."
+      },
+      "perfil_consumo": {
+        "classes_sociais": [
+          { "classe": "A", "pct": 2.6 },
+          { "classe": "B", "pct": 31.4 },
+          { "classe": "C", "pct": 35.9 },
+          { "classe": "D", "pct": 22.9 },
+          { "classe": "E", "pct": 7.2 }
+        ],
+        "cobertura_4g": 97.6,
+        "cobertura_5g": 94.9,
+        "arpu_movel": 93
+      },
+      "capital_humano": {
+        "escolarizacao_6_14": 98.96,
+        "presenca_universitaria": "UFR (Universidade Federal de Rondonópolis) + UNIC/UNIRONDON e institutos técnicos — mão de obra qualificada acima da média regional.",
+        "observacao": "Escolarização básica muito alta (98,96%) e IDHM 0,755 (o mais alto entre as cidades). Mercado de trabalho maduro (44,9 mil CNPJs ativos). Classe C é a maior fatia (35,9%)."
+      },
+      "bairros": {
+        "melhores": [
+          { "nome": "Centro / Zona comercial", "nota": "Comércio e serviços — foco B2B e link dedicado." },
+          { "nome": "Vila Aurora / Jardim das Paineiras", "nota": "Áreas de maior poder aquisitivo — B2C premium (validar em geomarketing)." }
+        ],
+        "desafios": [
+          { "nome": "Recorte socioeconômico", "nota": "231 bairros (IBGE). Classe D/E somam 30% — planejar por setor censitário." }
+        ],
+        "observacao": "Cidade grande (231 bairros). Segmentação exige geomarketing; dados por bairro na base do Radar da Telecom (assinatura)."
+      },
+      "empreendedorismo": {
+        "nota": "Um dos principais polos de empresas e empregos de MT: 44,9 mil CNPJs ativos, puxados por agro, logística e indústria. Forte demanda B2B (tradings, transportadoras, indústrias) — o segmento corporativo é o alvo mais atrativo para um entrante, com menos elasticidade de preço."
+      },
+      "concorrentes": [
+        { "nome": "Interfibras", "tipo": "Fibra — líder (25,7% de share)", "forca": "Alta", "detalhes": "Líder com 23.840 acessos e crescimento explosivo (+487,8%/12m). 2.374 B2B + 21.466 B2C. Está consolidando o mercado — alvo ideal de M&A, se houver disposição de venda." },
+        { "nome": "Oi", "tipo": "Fibra (Nio/Vtal) — 25,0% de share", "forca": "Alta", "detalhes": "Praticamente empatado na liderança: 23.233 acessos. Marca nacional sobre rede neutra Vtal." },
+        { "nome": "Brasil TecPar", "tipo": "Grupo nacional em consolidação — 15,5% de share", "forca": "Alta", "detalhes": "3º com 14.351 acessos. Grupo que cresce por aquisições — concorrente e benchmark de consolidação." },
+        { "nome": "Claro / Vivo / TIM", "tipo": "Operadoras nacionais", "forca": "Alta", "detalhes": "Todas presentes com fibra e preço agressivo (Claro 600M a R$69,90). Pressionam o piso de preço no varejo." },
+        { "nome": "Meganet / Pedranet / Amigo e outros", "tipo": "ISPs locais/regionais", "forca": "Média", "detalhes": "Vários ISPs de médio/pequeno porte na cauda. Pedranet 600M R$99,90; Amigo 500M R$99,90. Candidatos a aquisição de entrada." },
+        { "nome": "+38 operadoras", "tipo": "Cauda longa (33,9% de share somado)", "forca": "Baixa", "detalhes": "44 operadoras no total (Anatel) — um dos mercados mais pulverizados e disputados de MT." }
+      ],
+      "concorrencia_resumo": "Mercado mais saturado de MT: 44 operadoras, 113,8 acessos/100 domicílios (sem folga residencial), top-3 com ~66% e o líder Interfibras dobrando de tamanho a cada poucos meses. Todas as nacionais presentes puxando preço. Greenfield é inviável; a única entrada racional é comprar um player com base e rede já instaladas, priorizando o segmento corporativo/agro.",
+      "infraestrutura": {
+        "rede_neutra": "Vtal presente. 25 provedores com ASN/BGP próprio — mercado tecnicamente maduro (a Net Way ainda NÃO tem ASN aqui).",
+        "lancamento_fibra": "Vários ISPs com rede própria. 92,5% dos acessos já são fibra. Backbone nacional robusto (entroncamento rodoferroviário).",
+        "diferenciais_locais": ["Terminal ferroviário Rumo (maior terminal de grãos da AL)", "Capital do agronegócio de MT", "UFR — Universidade Federal", "Receita municipal ~R$ 1,89 bi (2024)", "44,9 mil CNPJs ativos — demanda B2B forte"],
+        "obs": "Condições de posteamento (Energisa) e LPU requerem consulta direta às concessionárias."
+      },
+      "estrategia_go_to_market": {
+        "campanha": "Conecta Rondonópolis",
+        "slogan": "A velocidade do agro, na sua casa e na sua empresa.",
+        "segmentos": ["B2B", "B2G", "B2C"],
+        "plano_social": "Menos relevante (mercado saturado e de renda média). Foco em B2B/link dedicado e, no B2C, aquisição de base existente.",
+        "estrutura_sugerida": "Entrada exclusivamente por aquisição de ISP com base e rede (alvo de médio porte na cauda, ex.: Meganet), com célula B2B dedicada a agro/logística/indústria."
+      },
+      "avaliacao": {
+        "notas": {
+          "mercado": 85,
+          "poder_economico": 78,
+          "concorrencia": 18,
+          "dinamismo": 85,
+          "capital_humano": 68
+        },
+        "recomendacao_estrategica": "comprar",
+        "sintese": "Mercado grande, rico e dinâmico, mas os dados da Anatel mostram saturação de banda larga (113,8 acessos/100 domicílios, sem folga residencial), 44 operadoras e um líder (Interfibras) consolidando agressivamente (+488%/12m). O índice de viabilidade do Radar é baixo (3,1/10). Entrada do zero é inviável. Recomendação: aquisição (M&A) de um ISP com base e rede instaladas — priorizando o segmento corporativo/agro, que tem margem e menos guerra de preço. Observação estratégica: apesar de maior e mais rica, Rondonópolis tem MENOS espaço de crescimento orgânico que Cáceres (viabilidade 3,1 vs 5,3)."
+      },
+      "fontes": [
+        "IBGE — Cidades e Estados / Rondonópolis (MT), cód. 5107602",
+        "Radar da Telecom — Telecom Rondonópolis/MT (Anatel 08/2026: market share, acessos, % fibra, B2B/B2C, penetração, índices)",
+        "Receita Federal / Novo CAGED (empresas ativas, salário mediano) via Radar da Telecom",
+        "minhaconexao.com.br — ranking e preços de provedores"
+      ]
+    },
+    {
+      "id": "palmas-to",
+      "nome": "Palmas",
+      "uf": "TO",
+      "codigo_ibge": "1721000",
+      "apelido": "Capital do Tocantins",
+      "regiao": "Centro do Tocantins — cidade planejada, polo administrativo e de serviços do estado",
+      "prefeito": "José Eduardo de Siqueira Campos (2025)",
+      "resumo": "Capital mais nova do Brasil (fundada em 1989), cidade planejada e o maior e mais jovem mercado entre os estudados: 333 mil hab., alta escolaridade (39% dos vínculos com ensino superior) e IDHM 0,788 (o mais alto). Mas o mercado de banda larga é SATURADO (140 acessos/100 domicílios) e o mais pulverizado — 56 operadoras, líder Pronto Fibra com 31% (crescendo). Renda domiciliar e ARPU baixos. Entrada por aquisição, com forte ângulo B2G (capital = demanda de governo).",
+      "coordenadas": { "lat": -10.1844, "lng": -48.3336 },
+      "demografia": {
+        "populacao": 333154,
+        "populacao_ano": "2026 (estimativa IBGE)",
+        "populacao_censo_2022": 302692,
+        "densidade_hab_km2": 135.90,
+        "ranking_populacao_uf": 1,
+        "area_km2": 2227.33,
+        "idhm": 0.788,
+        "idhm_ano": 2010,
+        "idhm_faixa": "Alto",
+        "escolarizacao_6_14": 98.85,
+        "mortalidade_infantil": 11.23,
+        "idade_media": 30,
+        "distritos": ["Sede", "Taquaruçu", "Buritirana"]
+      },
+      "economia": {
+        "pib_per_capita": 46808.20,
+        "pib_per_capita_ano": 2023,
+        "pib_per_capita_uf_media": 35000,
+        "ranking_pib_per_capita_uf": 3,
+        "receitas_municipais_2024": 2613198697.82,
+        "despesas_municipais_2024": 2360633919.98,
+        "renda_domiciliar_per_capita": 1352,
+        "salario_mediano_admissao": 1725.00,
+        "empresas_ativas": 68246,
+        "empresas_ativas_ref": "Receita Federal · 09/2026",
+        "vocacoes": ["Administração pública (capital do estado — sede dos 3 poderes)", "Comércio e serviços", "Construção civil (cidade em expansão)", "Educação superior (UFT federal + privadas)", "Saúde (polo regional)", "Turismo (Serras e Lago, praias de água doce)"],
+        "obs_fonte": "PIB per capita, receitas e despesas: IBGE (2023-2025). Empresas ativas (CNPJ) e salário mediano: Receita Federal / Novo CAGED (via Radar da Telecom). RAIS 2024: salário médio formal R$ 4.166, 39% com ensino superior."
+      },
+      "banda_larga": {
+        "ref": "Anatel · 08/2026 (via Radar da Telecom)",
+        "acessos_totais": 141230,
+        "pct_fibra": 80.12,
+        "domicilios": 100897,
+        "acessos_por_100_domic": 140.0,
+        "penetracao_bb_pop": 15.2,
+        "operadoras_na_cidade": 56,
+        "lider": "Pronto Fibra",
+        "lider_share": 31.16,
+        "lider_var_12m": 11.88,
+        "velocidade_contratada_media": 529,
+        "velocidade_medida_mediana": 263,
+        "iqc": 96,
+        "mercado_enderecavel_domic_sem_bl": 0,
+        "netway_com_asn": false,
+        "market_share": [
+          { "op": "Pronto Fibra", "acessos": 44002, "share": 31.16 },
+          { "op": "Oi", "acessos": 22978, "share": 16.27 },
+          { "op": "Claro", "acessos": 17982, "share": 12.73 },
+          { "op": "Outras (53 operadoras)", "acessos": 56268, "share": 39.84 }
+        ],
+        "b2b_b2c_lider": { "op": "Pronto Fibra", "b2b": 2038, "b2c": 41964 },
+        "indices_radar": { "oportunidade": 4.3, "saturacao": 6.9, "viabilidade": 4.5 },
+        "leitura": "Maior e mais pulverizado mercado dos três: 141 mil acessos, 56 operadoras e líder Pronto Fibra com só 31% (mas crescendo +11,9%/12m). SATURADO no residencial (140 acessos/100 domicílios). 80% de fibra (menor % dos três — há migração HFC→fibra em curso). Qualidade boa (263 Mbps, IQC 96/100). O maior cliente B2B não é o líder: é a Lucaroni Telecom (7.200 acessos B2B) — sinal de nicho corporativo disputável. Índices do Radar medianos (oportunidade 4,3 / viabilidade 4,5)."
+      },
+      "perfil_consumo": {
+        "classes_sociais": [
+          { "classe": "A", "pct": 2.5 },
+          { "classe": "B", "pct": 20.6 },
+          { "classe": "C", "pct": 30.1 },
+          { "classe": "D", "pct": 30.0 },
+          { "classe": "E", "pct": 15.0 }
+        ],
+        "cobertura_4g": 98.7,
+        "cobertura_5g": 90.5,
+        "arpu_movel": 77
+      },
+      "capital_humano": {
+        "escolarizacao_6_14": 98.85,
+        "presenca_universitaria": "UFT (Universidade Federal do Tocantins) + UNITINS + privadas — 39% dos vínculos formais têm ensino superior (o maior índice dos três).",
+        "observacao": "Melhor capital humano dos três (39% superior, IDHM 0,788, idade média 30 anos). Mão de obra qualificada e jovem — vetor positivo para operação técnica e comercial, mas o custo de mão de obra é maior (salário médio formal R$ 4.166)."
+      },
+      "bairros": {
+        "melhores": [
+          { "nome": "Plano Diretor Norte/Sul (quadras ARNO/ARSO)", "nota": "Áreas planejadas de maior renda — alvo B2C premium e B2B (comércio/serviços)." },
+          { "nome": "Setor administrativo / Praça dos Girassóis", "nota": "Concentra governo estadual e órgãos públicos — foco B2G e link dedicado." }
+        ],
+        "desafios": [
+          { "nome": "Aurenys (Jardim Aureny I-IV) e Taquaralto", "nota": "Regiões sul mais populares e adensadas (Jardim Aureny III é o maior bairro, 8.060 domicílios) — base popular (classes D/E somam 45%)." }
+        ],
+        "observacao": "Cidade planejada em quadras (80 localidades/CNEFE). Segmentação por quadra é precisa via geomarketing; dados por bairro na base do Radar da Telecom (assinatura)."
+      },
+      "empreendedorismo": {
+        "nota": "Capital com 68,2 mil CNPJs ativos e forte peso do setor público (sede dos 3 poderes estaduais). Demanda B2G elevada (governo, autarquias, Judiciário, Assembleia) e B2B de serviços — os segmentos mais atrativos num mercado residencial já saturado."
+      },
+      "concorrentes": [
+        { "nome": "Pronto Fibra", "tipo": "Fibra — líder (31,2% de share)", "forca": "Alta", "detalhes": "Líder com 44.002 acessos, crescendo +11,9%/12m. Forte no B2C (41.964 pessoas). Alvo potencial de M&A — mas em expansão, pode não estar à venda." },
+        { "nome": "Oi", "tipo": "Fibra (Nio/Vtal) — 16,3% de share", "forca": "Alta", "detalhes": "2º com 22.978 acessos. Marca nacional sobre rede neutra Vtal." },
+        { "nome": "Claro", "tipo": "Operadora nacional (fibra/HFC) — 12,7% de share", "forca": "Alta", "detalhes": "3º com 17.982 acessos. Também líder em móvel na cidade. Preço agressivo." },
+        { "nome": "Vivo / TIM", "tipo": "Operadoras nacionais", "forca": "Alta", "detalhes": "Presentes com fibra; pressionam o preço no varejo." },
+        { "nome": "Lucaroni Telecom", "tipo": "ISP com foco B2B", "forca": "Média", "detalhes": "Maior base B2B da cidade (7.200 acessos CNPJ) — benchmark e alvo para quem quiser entrar pelo corporativo." },
+        { "nome": "+51 operadoras", "tipo": "Cauda longa (parte dos 39,8% restantes)", "forca": "Baixa", "detalhes": "56 operadoras no total (Anatel) — o mercado mais pulverizado dos três. Vários ISPs locais consolidáveis." }
+      ],
+      "concorrencia_resumo": "Mercado mais pulverizado dos três: 56 operadoras, residencial saturado (140 acessos/100 domicílios) e líder com apenas 31% (fragmentação alta após o top-1). Todas as nacionais presentes. Greenfield residencial é inviável; as portas de entrada são (a) aquisição de um ISP de médio porte e (b) o segmento B2G/B2B — forte numa capital, onde o maior cliente corporativo (Lucaroni) mostra que há nicho disputável.",
+      "infraestrutura": {
+        "rede_neutra": "Vtal presente. 36 provedores com ASN/BGP próprio — mercado tecnicamente muito maduro (a Net Way ainda NÃO tem ASN aqui). Telebras e Eletronet presentes (backbone/transporte).",
+        "lancamento_fibra": "Muitos ISPs com rede própria; 80% dos acessos já são fibra (migração HFC→fibra em curso). Backbone robusto (capital com Telebras/Eletronet).",
+        "diferenciais_locais": ["Capital do estado — sede dos 3 poderes (demanda B2G)", "UFT — Universidade Federal", "Cidade planejada, jovem e em expansão (+2,4%/ano)", "Receita municipal ~R$ 2,6 bi (2025)", "68,2 mil CNPJs ativos"],
+        "obs": "Condições de posteamento (Energisa Tocantins) e LPU requerem consulta direta às concessionárias."
+      },
+      "estrategia_go_to_market": {
+        "campanha": "Conecta Palmas",
+        "slogan": "A capital conectada no ritmo de quem constrói o futuro.",
+        "segmentos": ["B2G", "B2B", "B2C"],
+        "plano_social": "Relevante no sul da cidade (Aurenys/Taquaralto): classes D/E somam 45%. Plano de entrada acessível para capturar base popular.",
+        "estrutura_sugerida": "Entrada por aquisição de ISP de médio porte + célula B2G forte (contratos de governo estadual) e B2B de serviços. Filial de capital (porte maior), aproveitando mão de obra qualificada local."
+      },
+      "avaliacao": {
+        "notas": {
+          "mercado": 90,
+          "poder_economico": 58,
+          "concorrencia": 20,
+          "dinamismo": 82,
+          "capital_humano": 75
+        },
+        "recomendacao_estrategica": "comprar",
+        "sintese": "Maior mercado dos três (333 mil hab.), capital jovem, escolarizada (39% com ensino superior) e em expansão, com forte demanda B2G. Porém os dados da Anatel mostram residencial saturado (140 acessos/100 domicílios), o mercado mais pulverizado do estudo (56 operadoras) e renda domiciliar/ARPU baixos (R$ 1.352 / R$ 77) — classes D/E somam 45%. Índice de viabilidade do Radar mediano (4,5/10). Recomendação: entrar por aquisição de um ISP de médio porte, priorizando fortemente o B2G (governo estadual) e o B2B de serviços — onde há nicho (a Lucaroni lidera o corporativo sem ser líder geral) — em vez de brigar no varejo residencial saturado."
+      },
+      "fontes": [
+        "IBGE — Cidades e Estados / Palmas (TO), cód. 1721000",
+        "Radar da Telecom — Telecom Palmas/TO (Anatel 08/2026: market share, acessos, % fibra, B2B/B2C, penetração, índices, RAIS)",
+        "Receita Federal / Novo CAGED / RAIS (empresas ativas, salário, escolaridade) via Radar da Telecom"
+      ]
+    },
+    {
+      "id": "tocantins-to",
+      "nome": "Tocantins",
+      "uf": "TO",
+      "tipo": "estado",
+      "codigo_ibge": "17",
+      "apelido": "Estado · Visão Geral",
+      "regiao": "Região Norte — estado do MATOPIBA (fronteira agrícola), eixo da Ferrovia Norte-Sul",
+      "governador": "Wanderlei Barbosa Castro",
+      "resumo": "Visão geral do estado: 1,6 milhão de habitantes em 139 municípios, com um mercado de banda larga EXTREMAMENTE pulverizado — 186 provedores, nenhum acima de 100 mil acessos e o líder (Pronto Fibra) com apenas 13,8%, concentrado em Palmas. O dado mais relevante: 73% dos municípios têm penetração de banda larga abaixo de 30% e a Starlink já lidera em 64 das 139 cidades. Ou seja, o interior é um vazio de fibra — grande oportunidade greenfield (FTTH/rádio), enquanto as cidades maiores pedem consolidação (M&A).",
+      "coordenadas": { "lat": -10.17, "lng": -48.33 },
+      "demografia": {
+        "populacao": 1595994,
+        "populacao_ano": "2026 (estimativa IBGE)",
+        "populacao_censo_2022": 1511460,
+        "densidade_hab_km2": 5.45,
+        "area_km2": 277423.63,
+        "idhm": 0.731,
+        "idhm_ano": 2021,
+        "idhm_faixa": "Alto",
+        "idade_media": 32.6,
+        "municipios": 139,
+        "escolarizacao_6_14": null
+      },
+      "economia": {
+        "pib_per_capita": null,
+        "renda_domiciliar_per_capita": 2036,
+        "receitas_municipais_2024": 24234003534.42,
+        "despesas_municipais_2024": 18735886514.39,
+        "vinculos_formais": 616359,
+        "salario_medio_rais": 3291,
+        "empresas_ativas": null,
+        "salario_mediano_admissao": null,
+        "vocacoes": ["Agronegócio (MATOPIBA — soja, milho, grãos)", "Pecuária de corte", "Administração pública (novo estado, 1988)", "Logística (Ferrovia Norte-Sul + Hidrovia Araguaia-Tocantins)", "Energia (hidrelétricas Lajeado/Peixe Angical)", "Comércio e serviços (Palmas, Araguaína, Gurupi)"],
+        "obs_fonte": "População, área, IDH, receitas/despesas: IBGE / Siconfi (2022-2025). Renda domiciliar per capita R$ 2.036 (IBGE). Emprego formal: RAIS 2024 (616 mil vínculos, salário médio R$ 3.291, 29% com ensino superior)."
+      },
+      "banda_larga": {
+        "ref": "Anatel · 08/2026 (via Radar da Telecom)",
+        "acessos_totais": 318673,
+        "pct_fibra": 81.14,
+        "domicilios": 503825,
+        "acessos_por_100_domic": 63.3,
+        "penetracao_bb_pop": 23.1,
+        "operadoras_na_cidade": 186,
+        "lider": "Pronto Fibra",
+        "lider_share": 13.81,
+        "lider_var_12m": null,
+        "lider_em_cidades": { "nome": "Starlink", "qtd": 64 },
+        "velocidade_contratada_media": null,
+        "velocidade_medida_mediana": null,
+        "iqc": null,
+        "mercado_enderecavel_domic_sem_bl": 185152,
+        "netway_com_asn": false,
+        "market_share": [
+          { "op": "Pronto Fibra", "acessos": 44002, "share": 13.81 },
+          { "op": "Aranet", "acessos": 33269, "share": 10.44 },
+          { "op": "Oi", "acessos": 31283, "share": 9.82 },
+          { "op": "Outras (183 operadoras)", "acessos": 210119, "share": 65.93 }
+        ],
+        "b2b_b2c_lider": null,
+        "share_nota": "Nenhum provedor passa de 13,8% — mercado sem dono. 186 provedores no estado, nenhum acima de 100 mil acessos. Quem mais cresce é a Starlink: +17.373 acessos em 12 meses (+131,7%).",
+        "fragmentacao_nota": "Dos 186 provedores: 170 têm até 2.500 clientes; só 10 têm entre 10 mil e 100 mil; nenhum acima de 100 mil. Mercado pulverizado e sem líder consolidado — terreno fértil para um grupo com capital e operação regional.",
+        "indices_radar": null,
+        "leitura": "O estado é o oposto de uma capital saturada: penetração de só 63,3 acessos/100 domicílios (185 mil lares sem banda larga) e 73% dos municípios abaixo de 30% de penetração. A Starlink já lidera em 64 das 139 cidades — ou seja, no interior o satélite ocupa o vácuo deixado pela fibra. Fibra: 81%. Mercado pulverizado (186 provedores, líder com 13,8%). Leitura estratégica: há um duplo espaço — greenfield de fibra/rádio no interior subpenetrado e consolidação (M&A) de ISPs regionais nas cidades maiores (Palmas, Araguaína, Gurupi)."
+      },
+      "perfil_consumo": {
+        "cobertura_4g": 82.0,
+        "cobertura_5g": 12.0,
+        "arpu_movel": 83
+      },
+      "capital_humano": {
+        "pct_superior": 29,
+        "presenca_universitaria": "UFT (Universidade Federal do Tocantins) + UNITINS + IFTO + rede privada.",
+        "observacao": "Mão de obra jovem (idade média 32,6 anos) e com 29% de ensino superior entre os vínculos formais. Salário médio formal R$ 3.291 (RAIS). Capital humano concentrado em Palmas e Araguaína."
+      },
+      "municipios_destaque": {
+        "oportunidades": [
+          { "cidade": "Esperantina", "indice": 5.2, "nota": "expansão 4G, +5%/ano" },
+          { "cidade": "Tocantinópolis", "indice": 5.0, "nota": "3.882 hab. sem 4G" },
+          { "cidade": "Brejinho de Nazaré", "indice": 5.0, "nota": "crescimento +5,8%/ano" }
+        ],
+        "baixa_penetracao": [
+          { "cidade": "Novo Acordo", "bb": 10.5, "pop": 4134 },
+          { "cidade": "Lagoa da Confusão", "bb": 10.9, "pop": 16934 },
+          { "cidade": "Mateiros", "bb": 11.0, "pop": 2955 }
+        ],
+        "crescimento": [
+          { "cidade": "Lagoa da Confusão", "cresc": 3.4 },
+          { "cidade": "Tabocão", "cresc": 3.0 },
+          { "cidade": "Palmas", "cresc": 2.4 },
+          { "cidade": "Porto Nacional", "cresc": 2.3 },
+          { "cidade": "São Miguel do Tocantins", "cresc": 2.0 }
+        ],
+        "nota": "102 municípios (73% do estado) têm penetração de banda larga abaixo de 30% — gap estrutural de infraestrutura. Muitos já têm 4G que pode ancorar oferta de BB fixo via rádio ou FTTH em novos loteamentos. Fonte: Radar da Telecom / Anatel."
+      },
+      "concorrentes": [
+        { "nome": "Pronto Fibra", "tipo": "Fibra — líder estadual (13,8%)", "forca": "Alta", "detalhes": "Líder com 44.002 acessos, mas concentrado em Palmas. Não é dominante no estado." },
+        { "nome": "Aranet", "tipo": "ISP regional (10,4%)", "forca": "Alta", "detalhes": "2º no estado com 33.269 acessos. Player regional relevante — alvo de M&A." },
+        { "nome": "Oi (Nio/Vtal)", "tipo": "Fibra nacional (9,8%)", "forca": "Média", "detalhes": "31.283 acessos sobre rede neutra Vtal." },
+        { "nome": "Starlink", "tipo": "Satélite (LEO) — líder em 64 cidades", "forca": "Alta", "detalhes": "Lidera em 64 das 139 cidades e foi quem mais cresceu (+17.373 acessos / +131,7% em 12m). Domina o interior sem fibra — o grande concorrente a bater no greenfield rural." },
+        { "nome": "Claro / Vivo / TIM", "tipo": "Operadoras nacionais", "forca": "Média", "detalhes": "Presentes nas cidades maiores; Claro lidera o móvel no estado." },
+        { "nome": "+180 ISPs regionais/locais", "tipo": "Cauda longa (186 no total)", "forca": "Baixa", "detalhes": "Mercado muito pulverizado: 170 provedores têm até 2.500 clientes. Vasto pipeline de aquisições de pequenos ISPs." }
+      ],
+      "concorrencia_resumo": "Estado sem líder consolidado: 186 provedores, o maior com apenas 13,8% de share e nenhum acima de 100 mil acessos. No interior, a Starlink preenche o vácuo de fibra (lidera em 64 cidades). É um dos mercados mais fragmentados e subpenetrados do país — favorável tanto a greenfield (interior) quanto a consolidação (cidades maiores).",
+      "infraestrutura": {
+        "rede_neutra": "Vtal presente nas cidades maiores. Backbone nacional via Palmas (Telebras/Eletronet). Interior ainda dependente de rádio e satélite.",
+        "lancamento_fibra": "81% dos acessos já são fibra, mas concentrados nas cidades grandes. Novos loteamentos e sedes municipais do interior são o pipeline de FTTH.",
+        "diferenciais_locais": ["139 municípios (73% subpenetrados)", "MATOPIBA — fronteira agrícola em expansão", "Ferrovia Norte-Sul (eixo logístico)", "Hidrovia Araguaia-Tocantins", "486 licitações federais ativas", "Estado jovem e em crescimento populacional"],
+        "obs": "Condições de posteamento (Energisa Tocantins) e capilaridade de backbone no interior requerem levantamento município a município."
+      },
+      "estrategia_go_to_market": {
+        "campanha": "Conecta Tocantins",
+        "slogan": "Do Plano Diretor ao interior: fibra de verdade em todo o estado.",
+        "segmentos": ["Greenfield interior (FTTH/rádio)", "M&A cidades-polo", "B2G estadual"],
+        "plano_social": "Essencial no interior (renda domiciliar R$ 2.036 e penetração baixa): plano de entrada acessível ancorado em 4G/rádio onde a fibra ainda não chega.",
+        "estrutura_sugerida": "Dupla frente: (1) aquisição de um ISP regional com rede (Aranet ou Pronto como referências de porte) para ganhar escala nas cidades-polo (Palmas, Araguaína, Gurupi); (2) expansão greenfield de FTTH/rádio nos ~100 municípios subpenetrados, disputando o espaço hoje ocupado pela Starlink. Operação-mãe estadual em Palmas."
+      },
+      "avaliacao": {
+        "notas": {
+          "mercado": 80,
+          "poder_economico": 50,
+          "concorrencia": 58,
+          "dinamismo": 70,
+          "capital_humano": 55
+        },
+        "recomendacao_estrategica": "hibrida",
+        "sintese": "Como visão de estado, Tocantins é atraente justamente pelo que falta: penetração de banda larga baixa (63,3 acessos/100 domicílios; 73% dos municípios abaixo de 30%) e nenhum provedor consolidado (líder com 13,8%, 186 ISPs pulverizados). O interior é um vazio de fibra onde hoje a Starlink lidera em 64 cidades. Recomendação híbrida: (1) consolidar via M&A um ISP regional para abrir operação com escala nas cidades-polo; (2) avançar greenfield (FTTH/rádio) nos municípios subpenetrados, com âncora em 4G e foco no interior agrícola em crescimento. O poder de compra é o ponto fraco (renda e ARPU baixos), o que pede planos de entrada acessíveis e forte captura de B2G estadual."
+      },
+      "fontes": [
+        "IBGE — Cidades e Estados / Tocantins, cód. 17 (população, área, IDH, receitas, renda)",
+        "Radar da Telecom — Telecom Tocantins/UF (Anatel 08/2026: market share estadual, 186 provedores, penetração, líder em cidades, oportunidades por município)",
+        "RAIS/MTE 2024 (vínculos formais, salário, escolaridade) via Radar da Telecom"
+      ]
+    }
+  ]
+}
